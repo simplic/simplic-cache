@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="CacheScope.cs" />
     <Compile Include="Interface\ICacheObject.cs" />
+    <Compile Include="Interface\IDataCacheRepository.cs" />
+    <Compile Include="Interface\IDataCacheService.cs" />
     <Compile Include="Interface\IWeakReferenceCacheService.cs" />
     <Compile Include="Interface\ICacheService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
