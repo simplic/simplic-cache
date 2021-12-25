@@ -12,14 +12,14 @@ namespace Simplic.Cache.Test
     public class DataCacheTest
     {
         [Fact]
-        public void Call_Get_Without_Cache_Entry()
+        public async Task Call_Get_Without_Cache_Entry()
         {
             var repository = new Mock<IDataCacheRepository>();
 
             bool getCalled = false;
             bool setCalled = false;
 
-            string repositoryGet(string type, string key, string value)
+            async Task<string> repositoryGet(string type, string key, string value)
             {
                 getCalled = true;
                 return null;
@@ -38,9 +38,9 @@ namespace Simplic.Cache.Test
 
             var service = new DataCacheService(repository.Object);
 
-            var result = service.Get<string>("sample_type", "sample_key", "sample_value", () =>
+            var result = await service.Get<string>("sample_type", "sample_key", "sample_value", () =>
             {
-                return "Sample Value";
+                return Task.FromResult("Sample Value");
             });
 
             Assert.Equal("Sample Value", result);
@@ -49,14 +49,14 @@ namespace Simplic.Cache.Test
         }
 
         [Fact]
-        public void Call_Get_With_Cache_Entry()
+        public async Task Call_Get_With_Cache_Entry()
         {
             var repository = new Mock<IDataCacheRepository>();
 
             bool getCalled = false;
             bool setCalled = false;
 
-            string repositoryGet(string type, string key, string value)
+            async Task<string> repositoryGet(string type, string key, string value)
             {
                 return "Cache-Value";
             }
@@ -74,10 +74,10 @@ namespace Simplic.Cache.Test
 
             var service = new DataCacheService(repository.Object);
 
-            var result = service.Get<string>("sample_type", "sample_key", "sample_value", () =>
+            var result = await service.Get<string>("sample_type", "sample_key", "sample_value", () =>
             {
                 getCalled = true;
-                return "Sample Value";
+                return Task.FromResult("Sample Value");
             });
 
             Assert.Equal("Cache-Value", result);

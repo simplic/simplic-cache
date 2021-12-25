@@ -15,37 +15,37 @@ namespace Simplic.Cache.Service
             this.dataCacheRepository = dataCacheRepository;
         }
 
-        public T Get<T>(string type, string keyName, string key, Func<T> func)
+        public async Task<T> Get<T>(string type, string keyName, string key, Func<Task<T>> func)
         {
-            var obj = dataCacheRepository.Get<T>(type, keyName, key);
+            var obj = await dataCacheRepository.Get<T>(type, keyName, key);
 
             if (obj != null)
                 return obj;
 
-            obj = func();
+            obj = await func();
 
             if (obj != null)
-                dataCacheRepository.Set<T>(type, keyName, key, obj);
+                await dataCacheRepository.Set<T>(type, keyName, key, obj);
 
             return obj;
         }
 
-        public void Remove(string type, IDictionary<string, string> keys)
+        public async Task Remove(string type, IDictionary<string, string> keys)
         {
             if (keys == null)
                 return;
 
             foreach (var kvp in keys)
-                dataCacheRepository.Remove(type, kvp.Key, kvp.Value);
+                await dataCacheRepository.Remove(type, kvp.Key, kvp.Value);
         }
 
-        public void Set<T>(string type, IDictionary<string, string> keys, T obj)
+        public async Task Set<T>(string type, IDictionary<string, string> keys, T obj)
         {
             if (keys == null)
                 return;
 
             foreach (var kvp in keys)
-                dataCacheRepository.Set(type, kvp.Key, kvp.Value, obj);
+                await dataCacheRepository.Set(type, kvp.Key, kvp.Value, obj);
         }
     }
 }

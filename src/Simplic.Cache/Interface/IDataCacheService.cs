@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Simplic.Cache
 {
     public interface IDataCacheService
     {
-        T Get<T>(string type, string keyName, string key, Func<T> func);
+        Task<T> Get<T>(string type, string keyName, string key, Func<Task<T>> func);
 
-        void Set<T>(string type, IDictionary<string, string> ids, T obj);
+        Task Set<T>(string type, IDictionary<string, string> ids, T obj);
 
-        void Remove(string type, IDictionary<string, string> ids);
+        Task Remove(string type, IDictionary<string, string> ids);
     }
 }
