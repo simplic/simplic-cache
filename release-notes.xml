@@ -1,5 +1,5 @@
 <ReleaseNotes>
-  <ChangeSet>
+  <ChangeSet guid="c84f2a5b-5fa9-489a-a11c-71dfce932ec2">
     <Change type="feature">Add data-caching service and repository.</Change>
   </ChangeSet>
 </ReleaseNotes>
