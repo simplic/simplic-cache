@@ -1,2 +1,5 @@
 <ReleaseNotes>
+  <ChangeSet>
+    <Change type="feature">Add data-caching service and repository.</Change>
+  </ChangeSet>
 </ReleaseNotes>
