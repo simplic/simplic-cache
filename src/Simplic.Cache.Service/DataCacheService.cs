@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Simplic.Cache.Service
 {
+    /// <inheritdoc/>
     public class DataCacheService : IDataCacheService
     {
         private readonly IDataCacheRepository dataCacheRepository;
 
+        /// <summary>
+        /// Initialize service
+        /// </summary>
+        /// <param name="dataCacheRepository">Repository instance</param>
         public DataCacheService(IDataCacheRepository dataCacheRepository)
         {
             this.dataCacheRepository = dataCacheRepository;
         }
 
+        /// <inheritdoc/>
         public async Task<T> Get<T>(string type, string keyName, string key, Func<Task<T>> func)
         {
             var obj = await dataCacheRepository.Get<T>(type, keyName, key);
@@ -30,6 +34,7 @@ namespace Simplic.Cache.Service
             return obj;
         }
 
+        /// <inheritdoc/>
         public async Task Remove(string type, IDictionary<string, string> keys)
         {
             if (keys == null)
@@ -39,6 +44,7 @@ namespace Simplic.Cache.Service
                 await dataCacheRepository.Remove(type, kvp.Key, kvp.Value);
         }
 
+        /// <inheritdoc/>
         public async Task Set<T>(string type, IDictionary<string, string> keys, T obj)
         {
             if (keys == null)
