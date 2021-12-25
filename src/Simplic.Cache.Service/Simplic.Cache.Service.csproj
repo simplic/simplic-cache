@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataCacheService.cs" />
     <Compile Include="WeakReferenceCacheService.cs" />
     <Compile Include="CacheService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Simplic.Cache.Service;
+﻿using Simplic.Cache.Service;
 using System;
 using Unity;
+using Xunit;
 
 namespace Simplic.Cache.Test
 {
-    [TestClass]
     public class CacheTest
     {
         private readonly UnityContainer container;
@@ -17,7 +16,7 @@ namespace Simplic.Cache.Test
             container.RegisterType<IWeakReferenceCacheService, WeakReferenceCacheService>();
         }
 
-        [TestMethod]
+        [Fact]
         public void SetGetTest()
         {
             var service = container.Resolve<ICacheService>();
@@ -27,15 +26,15 @@ namespace Simplic.Cache.Test
 
             service.Set(key, value);
 
-            Assert.AreEqual(value, service.Get<Guid>(key));
+            Assert.Equal(value, service.Get<Guid>(key));
 
-            Assert.AreEqual(default(Guid), service.Get<Guid>(Guid.NewGuid().ToString()));
+            Assert.Equal(default(Guid), service.Get<Guid>(Guid.NewGuid().ToString()));
 
             service.Remove<Guid>(key);
-            Assert.AreEqual(default(Guid), service.Get<Guid>(key));
+            Assert.Equal(default(Guid), service.Get<Guid>(key));
         }
 
-        [TestMethod]
+        [Fact]
         public void SetGetWeakReferenceTest()
         {
             var service = container.Resolve<IWeakReferenceCacheService>();
@@ -45,15 +44,15 @@ namespace Simplic.Cache.Test
 
             service.Set(key, value);
 
-            Assert.AreEqual(value, service.Get<Guid>(key));
+            Assert.Equal(value, service.Get<Guid>(key));
 
-            Assert.AreEqual(default(Guid), service.Get<Guid>(Guid.NewGuid().ToString()));
+            Assert.Equal(default(Guid), service.Get<Guid>(Guid.NewGuid().ToString()));
 
             service.Remove<Guid>(key);
-            Assert.AreEqual(default(Guid), service.Get<Guid>(key));
+            Assert.Equal(default(Guid), service.Get<Guid>(key));
         }
 
-        [TestMethod]
+        [Fact]
         public void SetGetObjectTest()
         {
             var service = container.Resolve<ICacheService>();
@@ -65,15 +64,15 @@ namespace Simplic.Cache.Test
 
             service.Set(obj);
 
-            Assert.AreEqual(obj, service.Get<CacheTestObject>(obj.CacheKey));
+            Assert.Equal(obj, service.Get<CacheTestObject>(obj.CacheKey));
 
-            Assert.IsNull(service.Get<CacheTestObject>(Guid.NewGuid().ToString()));
+            Assert.Null(service.Get<CacheTestObject>(Guid.NewGuid().ToString()));
 
             service.Remove<CacheTestObject>(obj.CacheKey);
-            Assert.IsNull(service.Get<CacheTestObject>(obj.CacheKey));
+            Assert.Null(service.Get<CacheTestObject>(obj.CacheKey));
         }
 
-        [TestMethod]
+        [Fact]
         public void SetGetObjectWeakReferenceTest()
         {
             var service = container.Resolve<IWeakReferenceCacheService>();
@@ -85,15 +84,15 @@ namespace Simplic.Cache.Test
 
             service.Set(obj);
 
-            Assert.AreEqual(obj, service.Get<CacheTestObject>(obj.CacheKey));
+            Assert.Equal(obj, service.Get<CacheTestObject>(obj.CacheKey));
 
-            Assert.IsNull(service.Get<CacheTestObject>(Guid.NewGuid().ToString()));
+            Assert.Null(service.Get<CacheTestObject>(Guid.NewGuid().ToString()));
 
             service.Remove<CacheTestObject>(obj.CacheKey);
-            Assert.IsNull(service.Get<CacheTestObject>(obj.CacheKey));
+            Assert.Null(service.Get<CacheTestObject>(obj.CacheKey));
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdaGet()
         {
             var value = Guid.NewGuid();
@@ -105,10 +104,10 @@ namespace Simplic.Cache.Test
                 return value;
             });
 
-            Assert.AreEqual(newValue, value);
+            Assert.Equal(newValue, value);
         }
 
-        [TestMethod]
+        [Fact]
         public void LambdaGetWeakReference()
         {
             var value = Guid.NewGuid();
@@ -120,7 +119,7 @@ namespace Simplic.Cache.Test
                 return value;
             });
 
-            Assert.AreEqual(newValue, value);
+            Assert.Equal(newValue, value);
         }
     }
 }
