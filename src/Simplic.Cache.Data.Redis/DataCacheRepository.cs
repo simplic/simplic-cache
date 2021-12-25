@@ -10,7 +10,7 @@ namespace Simplic.Cache.Data.Redis
         private readonly IKeyValueStore keyValueStore;
 
         /// <summary>
-        /// Initialize repository
+        /// Initialize repository 
         /// </summary>
         /// <param name="keyValueStore">Key value store</param>
         public DataCacheRepository(IKeyValueStore keyValueStore)
